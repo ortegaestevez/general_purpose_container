@@ -1,7 +1,7 @@
 IMAGE_NAME = dev-rust-java-python
 CONTAINER_NAME = dev-env
 
-.PHONY: build run exec stop
+.PHONY: build run exec stop run8080
 
 build:
 	docker build -t $(IMAGE_NAME) .
@@ -18,3 +18,11 @@ exec:
 
 stop:
 	docker stop $(CONTAINER_NAME) || true
+
+run8080:
+	docker run -it --rm \
+		--name $(CONTAINER_NAME) \
+		-p 8080:8080 \
+		-v $(shell pwd):/workspace \
+		-w /workspace \
+		$(IMAGE_NAME)
